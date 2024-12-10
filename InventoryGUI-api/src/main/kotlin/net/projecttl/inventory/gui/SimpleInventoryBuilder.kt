@@ -10,6 +10,7 @@ import org.bukkit.Bukkit
 import org.bukkit.block.Container
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
+import org.bukkit.event.HandlerList
 import org.bukkit.event.Listener
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryCloseEvent
@@ -65,9 +66,9 @@ class SimpleInventoryBuilder(
 
     @EventHandler
     private fun InventoryClickEvent.listener() {
-        if (title.compareTo(this.view.title())) {
-            if (inventoryIds.contains(id) && this.currentItem != null && this.view.player == player) {
-                if (this.inventory == inventory) {
+        if (title.compareTo(view.title())) {
+            if (inventoryIds.contains(id) && this.currentItem != null && view.player == this@SimpleInventoryBuilder.player) {
+                if (inventory == this@SimpleInventoryBuilder.inventory) {
                     for (slot in slots.entries) {
                         if (slot.key == this.rawSlot){
                             this.isCancelled = true
@@ -88,15 +89,17 @@ class SimpleInventoryBuilder(
 
     @EventHandler
     private fun InventoryCloseEvent.listener3() {
-        for(closeHandler in closeHandlers)
-            closeHandler(this)
-        if(this.view.player == player && inventoryIds.contains(id))
+        if(view.player == this@SimpleInventoryBuilder.player && inventoryIds.contains(id)) {
+            for(closeHandler in closeHandlers)
+                closeHandler(this)
             inventoryIds.remove(id)
+            HandlerList.unregisterAll(this@SimpleInventoryBuilder)
+        }
     }
 
     @EventHandler
     private fun PlayerSwapHandItemsEvent.listener4() {
-        if (this.player.inventory == inventory) {
+        if (player.inventory == this@SimpleInventoryBuilder.inventory) {
             this.isCancelled = true
         }
     }
