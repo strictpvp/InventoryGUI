@@ -8,12 +8,12 @@ plugins {
 }
 
 group = "net.projecttl"
-version = "4.6.0"
+version = "4.6.1"
 
 allprojects {
     apply(plugin = "com.gradleup.shadow")
-    apply(plugin = "org.jetbrains.kotlin.jvm")
     apply(plugin = "org.jetbrains.dokka")
+    apply(plugin = "org.jetbrains.kotlin.jvm")
 
     java {
         toolchain {
@@ -39,7 +39,7 @@ subprojects {
 
     dependencies {
         implementation(kotlin("stdlib"))
-        compileOnly("io.papermc.paper:paper-api:1.21.1-R0.1-SNAPSHOT")
+        compileOnly("io.papermc.paper:paper-api:1.21.3-R0.1-SNAPSHOT")
         if (this@subprojects.name != "InventoryGUI-api") {
             dependencies {
                 implementation(project(":InventoryGUI-api"))
