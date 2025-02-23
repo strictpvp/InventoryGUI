@@ -28,7 +28,7 @@ object InventoryGUI {
      * @throws IllegalArgumentException if not loaded by `io.papermc.paper.plugin.provider.classloader.ConfiguredPluginClassLoader.class`
      * @throws IllegalStateException if the plugin is not found from the classloader
      */
-    var plugin: Plugin = JavaPlugin.getProvidingPlugin(InventoryGUI::class.java) ?: Downstream.pullPlugin()
+    var plugin: Plugin = Downstream.pullPlugin()
         private set
     }
 
