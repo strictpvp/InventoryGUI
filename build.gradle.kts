@@ -31,9 +31,8 @@ subprojects {
     version = rootProject.version
 
     repositories {
-        maven {
+        maven("https://repo.papermc.io/repository/maven-public/") {
             name = "papermc"
-            url = uri("https://repo.papermc.io/repository/maven-public/")
         }
         maven(url = "https://oss.sonatype.org/content/repositories/snapshots/") {
             name = "sonatype-oss-snapshots"
