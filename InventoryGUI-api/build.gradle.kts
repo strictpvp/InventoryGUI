@@ -15,12 +15,12 @@ tasks {
         options.encoding = "UTF-8"
     }
 
-    create<Jar>("sourcesJar") {
+    register<Jar>("sourcesJar") {
         archiveClassifier.set("sources")
         from(sourceSets["main"].allSource)
     }
 
-    create<Jar>("javadocJar") {
+    register<Jar>("javadocJar") {
         archiveClassifier.set("javadoc")
         dependsOn("dokkaHtml")
         from("${projectDir}/build/dokka/html")

@@ -1,14 +1,14 @@
 plugins {
     java
-    kotlin("jvm") version "2.0.0"
+    kotlin("jvm") version "2.1.10"
     id("com.gradleup.shadow") version "8.3.0"
-    id("org.jetbrains.dokka") version "1.9.20"
+    id("org.jetbrains.dokka") version "2.0.0"
 
     `maven-publish`
 }
 
 group = "net.projecttl"
-version = "4.6.1"
+version = "4.6.2"
 
 allprojects {
     apply(plugin = "com.gradleup.shadow")
