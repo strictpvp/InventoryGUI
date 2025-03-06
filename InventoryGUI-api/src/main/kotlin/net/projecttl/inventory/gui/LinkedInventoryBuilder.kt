@@ -3,11 +3,8 @@ package net.projecttl.inventory.gui
 import net.kyori.adventure.text.Component
 import net.projecttl.inventory.InventoryGUI.inventoryIds
 import net.projecttl.inventory.InventoryGUI.plugin
+import net.projecttl.inventory.util.*
 import net.projecttl.inventory.util.InventoryType
-import net.projecttl.inventory.util.LinkedSlot
-import net.projecttl.inventory.util.ObservableHashMap
-import net.projecttl.inventory.util.SlotHandler
-import net.projecttl.inventory.util.compareTo
 import org.bukkit.Bukkit
 import org.bukkit.block.Container
 import org.bukkit.entity.Player
@@ -40,6 +37,7 @@ data class LinkedInventoryBuilder(
     }
 
     override fun slot(slot: Int, item: ItemStack, handler: InventoryClickEvent.() -> Unit) {
+        DupePrevention.setInventoryItem(item)
         slots[slot] = LinkedSlot(item, SlotHandler().apply { onClick(handler) })
     }
     
@@ -64,9 +62,10 @@ data class LinkedInventoryBuilder(
         }
 
         slots.addObserver {
+            DupePrevention.setInventoryItem(it.second.stack)
             inventory.setItem(it.first, it.second.stack)
         }
-
+        DupePrevention.tryRegisterEvents()
         player.openInventory(inventory)
         Bukkit.getServer().pluginManager.registerEvents(this, plugin)
         return inventory
@@ -108,6 +107,13 @@ data class LinkedInventoryBuilder(
             for(closeHandler in closeHandlers) {
                 closeHandler(this)
             }
+
+            for (item in player.inventory) {
+                if (DupePrevention.isInventoryItem(item)) {
+                    player.inventory.remove(item)
+                }
+            }
+
             inventoryIds.remove(id)
             HandlerList.unregisterAll(this@LinkedInventoryBuilder)
         }

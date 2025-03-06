@@ -3,6 +3,7 @@ package net.projecttl.inventory.gui
 import net.kyori.adventure.text.Component
 import net.projecttl.inventory.InventoryGUI.inventoryIds
 import net.projecttl.inventory.InventoryGUI.plugin
+import net.projecttl.inventory.util.DupePrevention
 import net.projecttl.inventory.util.InventoryType
 import net.projecttl.inventory.util.Slot
 import net.projecttl.inventory.util.compareTo
@@ -38,6 +39,7 @@ class SimpleInventoryBuilder(
     }
 
     override fun slot(slot: Int, item: ItemStack, handler: InventoryClickEvent.() -> Unit) {
+        DupePrevention.setInventoryItem(item)
         slots[slot] = Slot(item, handler)
     }
 
@@ -59,6 +61,7 @@ class SimpleInventoryBuilder(
         for (slot in slots.entries) {
             inventory.setItem(slot.key, slot.value.stack)
         }
+        DupePrevention.tryRegisterEvents()
         player.openInventory(inventory)
         Bukkit.getServer().pluginManager.registerEvents(this, plugin)
         return inventory
@@ -92,6 +95,13 @@ class SimpleInventoryBuilder(
         if(view.player == this@SimpleInventoryBuilder.player && inventoryIds.contains(id)) {
             for(closeHandler in closeHandlers)
                 closeHandler(this)
+
+            for (item in player.inventory) {
+                if (DupePrevention.isInventoryItem(item)) {
+                    player.inventory.remove(item)
+                }
+            }
+
             inventoryIds.remove(id)
             HandlerList.unregisterAll(this@SimpleInventoryBuilder)
         }
