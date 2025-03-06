@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "net.projecttl"
-version = "4.6.2"
+version = "4.6.3"
 
 allprojects {
     apply(plugin = "com.gradleup.shadow")

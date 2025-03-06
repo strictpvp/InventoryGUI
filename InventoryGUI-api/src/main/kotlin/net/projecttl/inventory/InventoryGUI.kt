@@ -25,12 +25,10 @@ object InventoryGUI {
      * The service plugin. Defaults to the plugin that loaded this library. You can modify this later if you want to.
      *
      * @throws InvalidPluginException if the current library isn't loaded by a plugin
-     * @throws IllegalArgumentException if not loaded by `io.papermc.paper.plugin.provider.classloader.ConfiguredPluginClassLoader.class`
-     * @throws IllegalStateException if the plugin is not found from the classloader
      */
     var plugin: Plugin = Downstream.pullPlugin()
         private set
-    }
+}
 
 /**
  * Opens the default GUI for a player.
