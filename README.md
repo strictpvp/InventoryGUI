@@ -18,7 +18,7 @@ You can see the Dokka document.
 
 ## Contact
 If you wanna send issues or discussions or PR more the faster, please contact with my discord server!
-* Discord Server: [Link](https://discord.gg/ngcTymJQXX)
+* Discord Server: [Link](https://discord.gg/xAPYwJe5RP)
 
 ## License
 This library is licensed under the General Public License v3.0.
