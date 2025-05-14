@@ -22,9 +22,9 @@ internal object Downstream {
         val classLoader = Downstream::class.java.classLoader
 
         return Bukkit.getPluginManager().plugins.find { plugin ->
-            val pluginClassLoader = plugin.javaClass.classLoader as PluginClassLoader
+            val pluginClassLoader = plugin.javaClass.classLoader as? PluginClassLoader
 
-            pluginClassLoader === classLoader || pluginClassLoader.internalLoaders.any { it === classLoader }
+            pluginClassLoader === classLoader || pluginClassLoader?.internalLoaders?.any { it === classLoader } == true
         } ?: throw InvalidPluginException("The library must be loaded from PluginClassLoader")
     }
 }
