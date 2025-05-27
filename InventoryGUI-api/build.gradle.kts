@@ -7,8 +7,12 @@ plugins {
 }
 
 tasks {
+    withType<JavaCompile> {
+        options.release.set(17)
+    }
+
     withType<KotlinCompile> {
-        compilerOptions.jvmTarget.set(JvmTarget.JVM_21)
+        compilerOptions.jvmTarget.set(JvmTarget.JVM_17)
     }
 
     withType<Javadoc> {
